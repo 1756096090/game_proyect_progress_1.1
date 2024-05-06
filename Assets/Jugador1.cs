@@ -1,4 +1,6 @@
+
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Scripts : MonoBehaviour
 {
@@ -35,6 +37,13 @@ public class Scripts : MonoBehaviour
     public float velocidadDeslisamiento;
     private bool enPared;
     private bool deslizando;
+    [Header("BarraDeVida")]
+    public Image barraDeVida;
+    public float vidaActual;
+    public float vidaMaxima;
+
+
+
 
 
     void Start()
@@ -47,6 +56,8 @@ public class Scripts : MonoBehaviour
 
     void Update()
     {
+        barraDeVida.fillAmount = vidaActual/vidaMaxima;
+        
         input.x = Input.GetAxisRaw("Horizontal");
         input.y = Input.GetAxisRaw("Vertical");
         
