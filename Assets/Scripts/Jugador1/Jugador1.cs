@@ -62,8 +62,10 @@ public class Scripts : MonoBehaviour
     {
         barraDeVida.fillAmount = vidaActual/stats.maxHealth;
         
-        input.x = Input.GetAxisRaw("Horizontal");
-        input.y = Input.GetAxisRaw("Vertical");
+        input.x = Input.GetAxisRaw("Horizontal2");
+        input.y = Input.GetAxisRaw("Vertical2");
+        Debug.Log(input.x);
+        Debug.Log(input.y);
         
 
         movimientoHorizontal = input.x * velocidadDeMovimiento;
