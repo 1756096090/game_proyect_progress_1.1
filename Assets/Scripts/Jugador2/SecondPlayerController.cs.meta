@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 712f5f5915e8a7941b488956a075db82
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - m_slideDust: {fileID: 1038168246061390451, guid: 8b8c8cc6774fb074cb9139cc631b108e, type: 3}
+  - attackSensor1: {instanceID: 0}
+  - attackSensor2: {instanceID: 0}
+  - attackSensor3: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -13,7 +13,7 @@ namespace SmallScaleInteractive._2DCharacter
         public float crouchSpeedFactor = 0.5f;
         public bool isCrouching = false;
         public bool canMove = true; // Controls whether the player can move
-        public float attackMoveLockDuration = 0.8f; // Time in seconds to lock movement during an attack
+        public float attackMoveLockDuration = 0.8f; // Time in seconds to lock movement during an horizontalAttack
         public bool isGrounded = false; //the player starts in the air
         public bool isCurrentlyJumping = false;
         public int jumpCount = 0;
@@ -144,10 +144,10 @@ namespace SmallScaleInteractive._2DCharacter
 
         private void HandleAttacking()
         {
-            if (Input.GetMouseButtonDown(0) && isGrounded) // Left mouse button for attack
+            if (Input.GetMouseButtonDown(0) && isGrounded) // Left mouse button for horizontalAttack
             {
                 bool wasMovingWhenAttacked = Mathf.Abs(rb.velocity.x) > 0;
-                float attackDirection = Mathf.Sign(rb.velocity.x); // Get the direction of the attack based on velocity
+                float attackDirection = Mathf.Sign(rb.velocity.x); // Get the direction of the horizontalAttack based on velocity
 
                 // Trigger appropriate animations based on whether the player was moving when they attacked
                 if (wasMovingWhenAttacked)
@@ -165,7 +165,7 @@ namespace SmallScaleInteractive._2DCharacter
 
         IEnumerator ApplyRunningAttackForce(float direction)
         {
-            float initialForce = 2f; // Set this to your desired force to keep the player moving in the attack direction
+            float initialForce = 2f; // Set this to your desired force to keep the player moving in the horizontalAttack direction
             rb.AddForce(new Vector2(direction * initialForce, 0), ForceMode2D.Impulse);
             yield return StartCoroutine(AttackMoveLock(0.5f)); //locks movement for 0.5 seconds, adjust as necessary
         }
