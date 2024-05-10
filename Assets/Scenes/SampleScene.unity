@@ -3494,12 +3494,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 734041849}
     - target: {fileID: 7849864593727775009, guid: eee76f1c130bdaa49bf3bc16d96bdd51, type: 3}
+      propertyPath: fuerzaDeSalto
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 7849864593727775009, guid: eee76f1c130bdaa49bf3bc16d96bdd51, type: 3}
       propertyPath: suavizadoMovimiento
       value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 7849864593727775009, guid: eee76f1c130bdaa49bf3bc16d96bdd51, type: 3}
       propertyPath: velocidadDeMovimiento
-      value: 12
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7849864593727775009, guid: eee76f1c130bdaa49bf3bc16d96bdd51, type: 3}
       propertyPath: velocidadDeslisamiento

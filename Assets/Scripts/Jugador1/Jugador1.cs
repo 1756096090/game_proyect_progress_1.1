@@ -62,16 +62,15 @@ public class Scripts : MonoBehaviour
     {
         barraDeVida.fillAmount = vidaActual/stats.maxHealth;
         
-        input.x = Input.GetAxisRaw("Horizontal2");
-        input.y = Input.GetAxisRaw("Vertical2");
-        Debug.Log(input.x);
-        Debug.Log(input.y);
+        input.x = Input.GetAxisRaw("Horizontal1");
+        input.y = Input.GetAxisRaw("Vertical1");
+        Debug.Log(Time.deltaTime.ToString());
         
 
         movimientoHorizontal = input.x * velocidadDeMovimiento;
         animator.SetFloat("Horizontal", Mathf.Abs(movimientoHorizontal));
         animator.SetBool("Escalar", escalando);
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetKeyDown(KeyCode.W))
         {
             if (enSuelo || dobleSaltoDisponible)
             {
@@ -91,7 +90,7 @@ public class Scripts : MonoBehaviour
         Escalar();
 
         //Move
-        Move(movimientoHorizontal * Time.deltaTime, salto);
+        Move(movimientoHorizontal, salto);
         salto = false;
 
         if (deslizando)
