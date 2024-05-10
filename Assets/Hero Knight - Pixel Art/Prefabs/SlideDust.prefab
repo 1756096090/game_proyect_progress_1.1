@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5307321229598810032}
   - component: {fileID: 4251641729282105201}
   - component: {fileID: 1794681801207184613}
+  - component: {fileID: 5605952217297194616}
   m_Layer: 0
   m_Name: SlideDust
   m_TagString: Untagged
@@ -106,3 +107,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &5605952217297194616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1038168246061390451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c2dcbf3d95f6364487c70c5983d1cc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

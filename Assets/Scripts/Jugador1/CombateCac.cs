@@ -1,4 +1,5 @@
 using Assets.Scripts.Stats;
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
@@ -6,13 +7,16 @@ using UnityEngine;
 
 public class CombateCac : MonoBehaviour
 {
-    private Animator        animator;
+    private Animator                          animator;
     
     [SerializeField] private Transform        controladorGolpe;
     [SerializeField] private float            radioGolpe;
-    [SerializeField] private float            dañoGolpe;
+    [LabelText("Daño")]
+    [SerializeField] private float            attackPower;
     [SerializeField] private float            tiempoEntreAtaque;
     [SerializeField] private float            tiempoSiguienteAtaque;
+    private readonly double                   critChance = 0.1;
+
 
 
     public void Start()
@@ -36,12 +40,14 @@ public class CombateCac : MonoBehaviour
     {
         animator.SetTrigger("ataque1");
         Collider2D[] objetos = Physics2D.OverlapCircleAll(controladorGolpe.position, radioGolpe);
+        float damage = Random.Range(0f, 1f) < critChance ? attackPower * 1.5f : attackPower;
+
 
         foreach (Collider2D c in objetos)
         {
-            if (c.CompareTag("Jugador2"))
+            if (c.CompareTag("jugador2"))
             {
-                c.GetComponent<PlayerStats>().Health -= dañoGolpe;
+                c.GetComponent<PlayerStats>().Health -= attackPower;
             }
         }
     }

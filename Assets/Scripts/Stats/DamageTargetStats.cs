@@ -79,7 +79,7 @@ namespace Assets.Scripts.Stats
 
             foreach (Collider2D c in hits)
             {
-                if (c.CompareTag("Jugador1"))
+                if (c.CompareTag("jugador1"))
                 {
                     float damage = Random.Range(0f, 1f) < critChance ? playerStats.Attack * 1.5f : playerStats.Attack;
                     c.GetComponent<PlayerStats>().Health -= damage;

@@ -16,6 +16,7 @@ namespace Assets.Scripts.Stats
         [BoxGroup("Stats")]
         [LabelText("Defensa")]
         [SerializeField] private int defense;
+        
 
         private float _currentHealth;
 
@@ -32,6 +33,8 @@ namespace Assets.Scripts.Stats
             {
                 if(value != _currentHealth)
                 {
+                    Debug.Log("Target is: " + gameObject.name);
+                    Debug.Log("Health changed from " + _currentHealth + " to " + value);
                     _currentHealth = Mathf.Max(value, 0f);
                     HealthChanged?.Invoke(_currentHealth);
                 }

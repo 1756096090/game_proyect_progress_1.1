@@ -59,7 +59,6 @@ public class SecondPlayerController : MonoBehaviour {
     {
         //m_damageTargetStats = GetComponent<DamageTargetStats>();
 
-
         m_groundSensorR1 = transform.Find("GroundSensor_R1").GetComponent<Sensor_HeroKnight>();
         m_groundSensorL1 = transform.Find("GroundSensor_L1").GetComponent<Sensor_HeroKnight>();
         m_wallSensorR1 = transform.Find("WallSensor_R1").GetComponent<Sensor_HeroKnight>();
