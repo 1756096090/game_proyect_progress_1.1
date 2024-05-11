@@ -212,7 +212,7 @@ public class SecondPlayerController : MonoBehaviour {
         //m_animator.SetTrigger(HeroKnightAnimations.death);
     }
 
-    private void TakeDamage()
+    public void TakeDamage()
     {
         m_animator.SetTrigger(SecondPlayerAnimations.hurt);
     }
@@ -239,15 +239,6 @@ public class SecondPlayerController : MonoBehaviour {
         }
     }
 
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            TakeDamage();
-            m_body2d.AddForce(new Vector2(m_facingDirection * ((float)ForceMode2D.Impulse), 2.0f), ForceMode2D.Impulse);
-        }
-    }
 
     // Animation Events
     // Called in slide animation.

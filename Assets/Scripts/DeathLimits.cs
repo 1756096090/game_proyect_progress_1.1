@@ -26,16 +26,15 @@ public class DeathLimits : MonoBehaviour
         if (collision.gameObject.CompareTag("fallToDeath"))
         {
             Destroy(gameObject);
-            EsperarYCambiarEscena();
+            Esperar();
+            SceneManager.LoadScene("StartPage");
 
         }
     }
 
-    IEnumerator EsperarYCambiarEscena()
+    IEnumerator Esperar()
     {
-        // Esperar 30 segundos
-        yield return new WaitForSeconds(5);
-        SceneManager.LoadScene("StartPage");
+        yield return new WaitForSeconds(30);
     }
 
     private void HitLimits()
