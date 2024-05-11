@@ -55,11 +55,13 @@ public class Scripts : MonoBehaviour
         stats = GetComponent<PlayerStats>();
         gravedadInicial = rb2D.gravityScale;
 
-        vidaActual = stats.Health;
+        vidaActual = stats.maxHealth;
+        barraDeVida.fillAmount = stats.maxHealth;
     }
 
     void Update()
     {
+        vidaActual = stats.Health;
         barraDeVida.fillAmount = vidaActual/stats.maxHealth;
         
         input.x = Input.GetAxisRaw("Horizontal1");
@@ -69,10 +71,12 @@ public class Scripts : MonoBehaviour
         movimientoHorizontal = input.x * velocidadDeMovimiento;
         animator.SetFloat("Horizontal", Mathf.Abs(movimientoHorizontal));
         animator.SetBool("Escalar", escalando);
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.W) && (enSuelo || dobleSaltoDisponible))
         {
+            movimientoHorizontal = input.x * fuerzaDeSalto;
             if (enSuelo || dobleSaltoDisponible)
             {
+
                 if (!enSuelo)
                 {
                     dobleSaltoDisponible = false;

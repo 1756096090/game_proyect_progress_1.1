@@ -2,18 +2,21 @@
 using System.Collections;
 using System;
 using Assets.Scripts.Stats;
-    
+using UnityEngine.UI;
+
 public class SecondPlayerController : MonoBehaviour {
 
-    [SerializeField] float      m_speed = 4.0f;
-    [SerializeField] float      m_jumpForce = 7.5f;
-    [SerializeField] float      m_rollForce = 6.0f;
-    [SerializeField] bool       m_noBlood = false;
-    [SerializeField] GameObject m_slideDust;
-    [SerializeField] Transform  attackSensor1;
-    [SerializeField] Transform  attackSensor2;
-    [SerializeField] Transform  attackSensor3;
-    [SerializeField] Vector3    boxAtackColliderDimensions;
+    [SerializeField] float          m_speed = 4.0f;
+    [SerializeField] float          m_jumpForce = 7.5f;
+    [SerializeField] float          m_rollForce = 6.0f;
+    [SerializeField] bool           m_noBlood = false;
+    [SerializeField] GameObject     m_slideDust;
+    [SerializeField] Transform      attackSensor1;
+    [SerializeField] Transform      attackSensor2;
+    [SerializeField] Transform      attackSensor3;
+    [SerializeField] Vector3        boxAtackColliderDimensions;
+    [SerializeField] private Image      barraDeVida;
+
 
     //Not initialized variables
     private Animator            m_animator;
@@ -44,6 +47,8 @@ public class SecondPlayerController : MonoBehaviour {
     private readonly string     horizontalMovement = "Horizontal2";
     private readonly string     verticalMovement= "Vertical2";
     private readonly string     jump = "Jump2";
+    private PlayerStats         stats;
+    private float               vidaActual;
 
 
 
@@ -65,6 +70,12 @@ public class SecondPlayerController : MonoBehaviour {
         m_wallSensorR2 = transform.Find("WallSensor_R2").GetComponent<Sensor_HeroKnight>();
         m_wallSensorL1 = transform.Find("WallSensor_L1").GetComponent<Sensor_HeroKnight>();
         m_wallSensorL2 = transform.Find("WallSensor_L2").GetComponent<Sensor_HeroKnight>();
+        stats = transform.GetComponent<PlayerStats>();
+        
+        vidaActual = stats.maxHealth;
+        barraDeVida.fillAmount = stats.maxHealth;
+
+
 
         attack1SensorDistance = Math.Abs(Math.Abs(transform.position.x) - Math.Abs(attackSensor1.position.x));
         attack2SensorDistance = Math.Abs(Math.Abs(transform.position.x) - Math.Abs(attackSensor3.position.x));
@@ -86,6 +97,9 @@ public class SecondPlayerController : MonoBehaviour {
         // Disable rolling if timer extends duration
         //if (m_rollCurrentTime > m_rollDuration)
         //    m_rolling = false;
+        vidaActual = stats.Health;
+        barraDeVida.fillAmount = vidaActual / stats.maxHealth;
+
 
         validateGrounded(m_grounded, m_groundSensorR1.State(), m_groundSensorL1.State());
 

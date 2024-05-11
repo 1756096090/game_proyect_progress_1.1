@@ -40,14 +40,14 @@ public class CombateCac : MonoBehaviour
     {
         animator.SetTrigger("ataque1");
         Collider2D[] objetos = Physics2D.OverlapCircleAll(controladorGolpe.position, radioGolpe);
-        float damage = Random.Range(0f, 1f) < critChance ? attackPower * 1.5f : attackPower;
 
 
         foreach (Collider2D c in objetos)
         {
             if (c.CompareTag("jugador2"))
             {
-                c.GetComponent<PlayerStats>().Health -= attackPower;
+                float damage = Random.Range(0f, 1f) < critChance ? attackPower * 1.5f : attackPower;
+                c.GetComponent<PlayerStats>().Health -= damage;
             }
         }
     }

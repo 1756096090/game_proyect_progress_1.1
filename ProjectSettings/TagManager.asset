@@ -7,6 +7,7 @@ TagManager:
   - jugador1
   - jugador2
   - button
+  - fallToDeath
   layers:
   - Default
   - TransparentFX
