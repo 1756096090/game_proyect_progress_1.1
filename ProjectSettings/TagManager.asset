@@ -6,6 +6,7 @@ TagManager:
   tags:
   - jugador1
   - jugador2
+  - button
   layers:
   - Default
   - TransparentFX

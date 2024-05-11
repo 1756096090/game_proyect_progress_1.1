@@ -64,7 +64,6 @@ public class Scripts : MonoBehaviour
         
         input.x = Input.GetAxisRaw("Horizontal1");
         input.y = Input.GetAxisRaw("Vertical1");
-        Debug.Log(Time.deltaTime.ToString());
         
 
         movimientoHorizontal = input.x * velocidadDeMovimiento;
