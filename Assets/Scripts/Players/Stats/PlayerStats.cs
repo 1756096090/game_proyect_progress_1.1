@@ -11,7 +11,7 @@ namespace Assets.Scripts.Stats
         [LabelText("Vida Máxima")]
         [SerializeField] public float maxHealth;
         [BoxGroup("Stats")]
-        [LabelText("Ataque")]
+        [LabelText("Ataque Base")]
         [SerializeField] private float attack;
         [BoxGroup("Stats")]
         [LabelText("Defensa")]

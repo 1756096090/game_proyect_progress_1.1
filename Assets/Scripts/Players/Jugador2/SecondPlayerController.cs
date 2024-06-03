@@ -3,6 +3,7 @@ using System.Collections;
 using System;
 using Assets.Scripts.Stats;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class SecondPlayerController : MonoBehaviour {
 
@@ -37,13 +38,13 @@ public class SecondPlayerController : MonoBehaviour {
     private bool                doubleJump = true;
     private bool                m_isWallSliding = false;
     private bool                m_grounded = false;
-    //private bool                m_rolling = false;
+    private bool                m_rolling = false;
     private int                 m_facingDirection = 1;
     //private int                 m_currentAttack = 0;
     //private float               m_timeSinceAttack = 0.0f;
     private float               m_delayToIdle = 0.0f;
-    //private float               m_rollDuration = 8.0f / 14.0f;
-    //private float               m_rollCurrentTime;
+    private float               m_rollDuration = 8.0f / 14.0f;
+    private float               m_rollCurrentTime;
     private readonly string     horizontalMovement = "Horizontal2";
     private readonly string     verticalMovement= "Vertical2";
     private readonly string     jump = "Jump2";
@@ -91,14 +92,20 @@ public class SecondPlayerController : MonoBehaviour {
         //m_timeSinceAttack += Time.deltaTime;
 
         // Increase timer that checks roll duration
-        //if (m_rolling)
-        //    m_rollCurrentTime += Time.deltaTime;
+        if (m_rolling)
+            m_rollCurrentTime += Time.deltaTime;
 
         // Disable rolling if timer extends duration
-        //if (m_rollCurrentTime > m_rollDuration)
-        //    m_rolling = false;
+        if (m_rollCurrentTime > m_rollDuration)
+            m_rolling = false;
+
         vidaActual = stats.Health;
-        barraDeVida.fillAmount = vidaActual / stats.maxHealth;
+        StartCoroutine(PlayerStateManagement.WaitAndExecute(0.2f, () => barraDeVida = UpdateHealth(barraDeVida, vidaActual, stats.maxHealth)));
+        if (transform.GetComponent<PlayerStats>().Health <= 0)
+        {
+            Destroy(gameObject);
+            //SceneManager.LoadScene("FirstScene");
+        }
 
 
         validateGrounded(m_grounded, m_groundSensorR1.State(), m_groundSensorL1.State());
@@ -108,8 +115,8 @@ public class SecondPlayerController : MonoBehaviour {
         swapSpriteDirection(inputX);
 
         // Move
-        //if (!m_rolling)
-        m_body2d.velocity = new Vector2(inputX * m_speed, m_body2d.velocity.y);
+        if (!m_rolling)
+            m_body2d.velocity = new Vector2(inputX * m_speed, m_body2d.velocity.y);
 
         //Set AirSpeed in animator
         m_animator.SetFloat(SecondPlayerAnimations.airSpeedY, m_body2d.velocity.y);
@@ -124,6 +131,12 @@ public class SecondPlayerController : MonoBehaviour {
 
         //Player actions like jump, horizontalAttack, block, etc.
         PlayerActions(inputX);
+    }
+
+    Image UpdateHealth(Image healthBar, float currentHealth, float maxHealth)
+    {
+        healthBar.fillAmount = currentHealth / maxHealth;
+        return healthBar;
     }
 
     private void PlayerActions(float inputX)
@@ -151,7 +164,7 @@ public class SecondPlayerController : MonoBehaviour {
         //}
 
         // Block
-        if (Input.GetKeyDown(KeyCode.J) && !Input.GetKeyDown(KeyCode.N) /*&& !m_rolling*/)
+        if (Input.GetKeyDown(KeyCode.J) && !Input.GetKeyDown(KeyCode.N) && !m_rolling)
         {
             m_animator.SetTrigger(SecondPlayerAnimations.block);
             m_animator.SetBool(SecondPlayerAnimations.idleBlock, true);
@@ -161,16 +174,16 @@ public class SecondPlayerController : MonoBehaviour {
             m_animator.SetBool(SecondPlayerAnimations.idleBlock, false);
 
         // Roll
-        //else if (Input.GetKeyDown("left shift") && !m_rolling && !m_isWallSliding)
-        //{
-        //    m_rolling = true;
-        //    m_animator.SetTrigger(SecondPlayerAnimations.roll);
-        //    m_body2d.velocity = new Vector2(m_facingDirection * m_rollForce, m_body2d.velocity.y);
-        //}
+        else if (Input.GetKeyDown("left shift") && !m_rolling && !m_isWallSliding)
+        {
+            m_rolling = true;
+            m_animator.SetTrigger(SecondPlayerAnimations.roll);
+            m_body2d.velocity = new Vector2(m_facingDirection * m_rollForce, m_body2d.velocity.y);
+        }
 
 
         //Jump
-        else if (Input.GetButtonDown(jump) && m_grounded /*&& !m_rolling*/)
+        else if (Input.GetButtonDown(jump) && m_grounded && !m_rolling)
         {
             m_animator.SetTrigger(SecondPlayerAnimations.jump);
             m_grounded = false;
@@ -179,7 +192,7 @@ public class SecondPlayerController : MonoBehaviour {
             m_groundSensorR1.Disable(0.2f);
             m_groundSensorL1.Disable(0.2f);
         }
-        else if (Input.GetButtonUp(jump) && !m_grounded && doubleJump/* && !m_rolling*/)
+        else if (Input.GetButtonUp(jump) && !m_grounded && doubleJump && !m_rolling)
         {
             m_animator.SetTrigger(SecondPlayerAnimations.jump);
             doubleJump = false;

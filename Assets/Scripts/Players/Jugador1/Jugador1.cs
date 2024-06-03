@@ -1,5 +1,6 @@
 using Assets.Scripts.Stats;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
  
 public class Scripts : MonoBehaviour
@@ -98,8 +99,13 @@ public class Scripts : MonoBehaviour
     {
 
         vidaActual = stats.Health;
+        StartCoroutine(PlayerStateManagement.WaitAndExecute(0.2f, () => barraDeVida = UpdateHealth(barraDeVida, vidaActual, stats.maxHealth)));
+        if (transform.GetComponent<PlayerStats>().Health <= 0)
+        {
+            Destroy(gameObject);
+            //SceneManager.LoadScene("FirstScene");
 
-        barraDeVida.fillAmount = vidaActual / stats.maxHealth;
+        }
 
         input.x = Input.GetAxisRaw("Horizontal1");
 
@@ -235,7 +241,6 @@ public class Scripts : MonoBehaviour
     }
 
     private void Escalar()
-
     {
 
         if (enPared)
@@ -270,6 +275,12 @@ public class Scripts : MonoBehaviour
 
         }
 
+    }
+
+    Image UpdateHealth(Image healthBar, float currentHealth, float maxHealth)
+    {
+        healthBar.fillAmount = currentHealth / maxHealth;
+        return healthBar;   
     }
 
 }

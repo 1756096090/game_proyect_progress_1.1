@@ -44,7 +44,9 @@ public class CombateAtaque3 : MonoBehaviour
             if (c.CompareTag("jugador2"))
             {
                 float damage = Random.Range(0f, 1f) < critChance ? attackPower * 1.5f : attackPower;
-                c.GetComponent<PlayerStats>().Health -= damage;
+                c.GetComponent<PlayerStats>().Health -= damage; 
+                StartCoroutine(PlayerStateManagement.WaitAndExecute(tiempoEntreAtaque, c.GetComponent<DamageTargetStats>().WasHitted));
+
             }
         }
     }

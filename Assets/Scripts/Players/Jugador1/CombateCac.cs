@@ -23,6 +23,7 @@ public class CombateCac : MonoBehaviour
     {
         animator = GetComponent<Animator>();
     }
+
     private void Update()
     {
         if (tiempoSiguienteAtaque > 0)
@@ -48,6 +49,7 @@ public class CombateCac : MonoBehaviour
             {
                 float damage = Random.Range(0f, 1f) < critChance ? attackPower * 1.5f : attackPower;
                 c.GetComponent<PlayerStats>().Health -= damage;
+                StartCoroutine(PlayerStateManagement.WaitAndExecute(tiempoEntreAtaque, c.GetComponent<DamageTargetStats>().WasHitted));
             }
         }
     }

@@ -1,0 +1,4 @@
+repository "game_proyect_progress_1.1@guamandavidSabado@cloud"
+  path "/"
+    br "/main"
+    co "/main"

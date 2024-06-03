@@ -72,10 +72,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2342049325543295360}
   - component: {fileID: 7849864593727775009}
-  - component: {fileID: 6557203947262494021}
+  - component: {fileID: 3827755075792875097}
+  - component: {fileID: 2869362887871855709}
+  - component: {fileID: 569601156847304619}
   - component: {fileID: 2337744137871746397}
-  - component: {fileID: 932741879907503875}
-  - component: {fileID: 8031532868055458782}
   - component: {fileID: 8410011765642556859}
   - component: {fileID: 3246583754477175880}
   - component: {fileID: 9021731998899950660}
@@ -133,7 +133,7 @@ MonoBehaviour:
   dimensionesCajaPared: {x: 0.3, y: 0.3, z: 0}
   velocidadDeslisamiento: 3
   barraDeVida: {fileID: 0}
---- !u!114 &6557203947262494021
+--- !u!114 &3827755075792875097
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -142,14 +142,48 @@ MonoBehaviour:
   m_GameObject: {fileID: 2426837710623245319}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7963d2b61ca68b4449596a2cbbdc5239, type: 3}
+  m_Script: {fileID: 11500000, guid: dcd31eeb3e1d50345889b1ef3cc3933d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   controladorGolpe: {fileID: 2888970946310254884}
+  radioGolpe: 0.5
+  damageConstant: 17
+  attackCooldown: 0.5
+  attackKey: 3
+--- !u!114 &2869362887871855709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2426837710623245319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcd31eeb3e1d50345889b1ef3cc3933d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controladorGolpe: {fileID: 8724904722801606281}
   radioGolpe: 0.3
-  "da\xF1oGolpe": 10
-  tiempoEntreAtaque: 0.1
-  tiempoSiguienteAtaque: 0.05
+  damageConstant: 15
+  attackCooldown: 0.35
+  attackKey: 4
+--- !u!114 &569601156847304619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2426837710623245319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcd31eeb3e1d50345889b1ef3cc3933d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controladorGolpe: {fileID: 3515249067013381888}
+  radioGolpe: 0.3
+  damageConstant: 15
+  attackCooldown: 0.7
+  attackKey: 5
 --- !u!212 &2337744137871746397
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -202,40 +236,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &932741879907503875
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2426837710623245319}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc9fd1be8afca044d8385ef432563961, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controladorGolpe: {fileID: 8724904722801606281}
-  radioGolpe: 0.2
-  "da\xF1oGolpe": 20
-  tiempoEntreAtaque: 0.25
-  tiempoSiguienteAtaque: 0.1
---- !u!114 &8031532868055458782
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2426837710623245319}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bc35124e60fce14da9dd65bd5616808, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controladorGolpe: {fileID: 3515249067013381888}
-  radioGolpe: 0.45
-  "da\xF1oGolpe": 15
-  tiempoEntreAtaque: 0.32
-  tiempoSiguienteAtaque: 0.1
 --- !u!50 &8410011765642556859
 Rigidbody2D:
   serializedVersion: 4

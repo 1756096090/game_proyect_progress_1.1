@@ -5,10 +5,10 @@ namespace Assets.Scripts.Effects
 {
     public class KnockbackEffect : MonoBehaviour
     {
-        public float knockbackTime = 0.2f;
-        public float hitDirectionForce = 10f;
-        public float constForce = 5f;
-        public float inputForce = 7.5f;
+        [SerializeField] private float knockbackTime = 0.2f;
+        [SerializeField] private float hitDirectionForce = 10f;
+        [SerializeField] private float constForce = 5f;
+        [SerializeField] private float inputForce = 7.5f;
 
         public bool IsBeingKnockedBack { get; private set; }
 

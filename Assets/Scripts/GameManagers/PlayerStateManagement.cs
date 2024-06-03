@@ -2,17 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStateManagement : MonoBehaviour
+public class PlayerStateManagement 
 {
-    // Start is called before the first frame update
-    void Start()
+    public static IEnumerator WaitAndExecute(float waitTime, System.Action callback)
     {
-        
+        yield return new WaitForSeconds(waitTime);
+        callback();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
