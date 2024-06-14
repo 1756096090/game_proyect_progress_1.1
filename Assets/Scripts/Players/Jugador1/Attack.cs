@@ -6,42 +6,57 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
-
 public class Attack : MonoBehaviour
 {
-    private Animator                                animator;
-    private readonly float                          critChance = 0.1f;
-    private float                                   timeSinceAttack = 0.25f;
-    private KnockbackEffect                         knockback;  
-    private Vector2                                 direction;
+    private Animator animator;
+    private readonly float                  critChance = 0.1f;
+    private float                           timeSinceAttack = 0f;
+    private float                           timeSinceBlock = 0f;
+    private int                             facingDirection;
+    private int                             blockUses = 2;
+    private readonly float                  blockCooldown = 2f;
 
-
-    [SerializeField] private Transform              controladorGolpe;
-    [SerializeField] private float                  radioGolpe;
+    [SerializeField] private Transform      controladorGolpe;
+    [SerializeField] private float          radioGolpe;
     [LabelText("Daño")]
     [Description("Daño que se le hará al jugador enemigo")]
-    [SerializeField] private float                  damageConstant;
-    [SerializeField] private float                  attackCooldown;
-    [SerializeField] private AttackKeys             attackKey; 
+    [SerializeField] private float          damageConstant;
+    [SerializeField] private float          attackCooldown;
+    [SerializeField] private                AttackKeys attackKey;
 
+    private bool IsAttacking => Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.C);
+    public bool IsBlocking => (Input.GetKeyDown(KeyCode.F) || !IsAttacking) && blockUses > 0;
+    private bool IsStoppingBlock => Input.GetKeyUp(KeyCode.F) || IsAttacking;
 
     public void Start()
     {
         animator = GetComponent<Animator>();
-        knockback = GetComponent<KnockbackEffect>();
     }
 
     private void Update()
     {
         timeSinceAttack += Time.deltaTime;
-        direction = new Vector2(transform.right.x, transform.right.y);
+        if(blockUses == 0 && timeSinceBlock < blockCooldown) timeSinceBlock += Time.deltaTime;
+        if(timeSinceBlock > blockCooldown) blockUses = 2;
+
+        FacingDirection(Input.GetAxisRaw("Horizontal"));
 
         if (Input.GetKeyDown(AttackKeysExtensions.ToKey(attackKey)) && timeSinceAttack > attackCooldown)
         {
             Golpe();
             timeSinceAttack = 0f;
         }
+
+        if (IsBlocking)
+        {
+            HandleBlocking(IsBlocking);
+        }
+        else if (blockUses == 0)
+        {
+            timeSinceBlock = 0;
+        }
     }
+
     private void Golpe()
     {
         animator.SetTrigger("ataque" + AttackKeysExtensions.Index(attackKey));
@@ -52,12 +67,35 @@ public class Attack : MonoBehaviour
             if (c.CompareTag("jugador2"))
             {
                 float damage = Random.Range(0f, 1f) < critChance ? damageConstant * 1.5f : damageConstant;
-                c.GetComponent<PlayerStats>().Health -= damage;
-                StartCoroutine(PlayerStateManagement.WaitAndExecute(0.15f, c.GetComponent<DamageTargetStats>().WasHitted));
-                c.GetComponent<KnockbackEffect>().CallKnockback(direction, Vector2.up, Input.GetAxisRaw("Horizontal2"));
+                Vector2 hitDirection = (c.transform.position - transform.position).normalized;
+                
+                if(c.GetComponent<DamageTargetStats>().IsBlocking)
+                {
+                    c.GetComponent<DamageTargetStats>().HitBlocked();
+                    c.GetComponent<KnockbackEffect>().CallKnockback(
+                        (-hitDirection * facingDirection) / 2, new Vector2(-facingDirection * 0.12f, 0.5f), Input.GetAxisRaw("Horizontal2")
+                    );
+                    blockUses--;
+                } else
+                {
+                    c.GetComponent<PlayerStats>().Health -= damage;
+                    StartCoroutine(Routines.WaitAndExecute(0.15f, c.GetComponent<DamageTargetStats>().WasHitted));
+                    c.GetComponent<KnockbackEffect>().CallKnockback(
+                        -hitDirection * facingDirection, new Vector2(-facingDirection * 0.12f, 0.5f), Input.GetAxisRaw("Horizontal2")
+                    );
+                }
 
             }
         }
+    }
+
+    private void HandleBlocking(bool isBlocking)
+    {
+        if (isBlocking)
+        {
+            animator.SetTrigger("block");
+            blockUses--;
+        } 
     }
 
     public void WasHitted()
@@ -69,5 +107,10 @@ public class Attack : MonoBehaviour
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(controladorGolpe.position, radioGolpe);
+    }
+
+    private void FacingDirection(float inputX)
+    {
+        facingDirection = (inputX > 0) ? 1 : -1;
     }
 }

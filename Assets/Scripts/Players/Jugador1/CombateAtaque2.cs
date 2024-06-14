@@ -47,7 +47,7 @@ public class CombateAtaque2 : MonoBehaviour
             {
                 float damage = Random.Range(0f, 1f) < critChance ? attackPower * 1.5f : attackPower;
                 c.GetComponent<PlayerStats>().Health -= damage;
-                StartCoroutine(PlayerStateManagement.WaitAndExecute(tiempoEntreAtaque, c.GetComponent<DamageTargetStats>().WasHitted));
+                StartCoroutine(Routines.WaitAndExecute(tiempoEntreAtaque, c.GetComponent<DamageTargetStats>().WasHitted));
             }
         }
     }

@@ -7,49 +7,50 @@ using UnityEngine.SceneManagement;
 
 public class SecondPlayerController : MonoBehaviour {
 
-    [SerializeField] float          m_speed = 4.0f;
-    [SerializeField] float          m_jumpForce = 7.5f;
-    [SerializeField] float          m_rollForce = 6.0f;
-    [SerializeField] bool           m_noBlood = false;
-    [SerializeField] GameObject     m_slideDust;
-    [SerializeField] Transform      attackSensor1;
-    [SerializeField] Transform      attackSensor2;
-    [SerializeField] Transform      attackSensor3;
-    [SerializeField] Vector3        boxAtackColliderDimensions;
+    [SerializeField] float              m_speed = 4.0f;
+    [SerializeField] float              m_jumpForce = 7.5f;
+    [SerializeField] float              m_rollForce = 6.0f;
+    [SerializeField] bool               m_noBlood = false;
+    [SerializeField] GameObject         m_slideDust;
+    [SerializeField] Transform          attackSensor1;
+    [SerializeField] Transform          attackSensor2;
+    [SerializeField] Transform          attackSensor3;
+    [SerializeField] Vector3            boxAtackColliderDimensions;
     [SerializeField] private Image      barraDeVida;
 
 
     //Not initialized variables
-    private Animator            m_animator;
-    private Rigidbody2D         m_body2d;
-    //private BoxCollider2D       m_boxCollider;
-    //private DamageTargetStats   m_damageTargetStats;
-    private Sensor_HeroKnight   m_groundSensorR1;
-    private Sensor_HeroKnight   m_groundSensorL1;
-    private Sensor_HeroKnight   m_wallSensorR1;
-    private Sensor_HeroKnight   m_wallSensorR2;
-    private Sensor_HeroKnight   m_wallSensorL1;
-    private Sensor_HeroKnight   m_wallSensorL2;
-    private float               attack1SensorDistance;
-    private float               attack2SensorDistance;
-    private float               attack3SensorDistance;
+    private Animator                m_animator;
+    private Rigidbody2D             m_body2d;
+    //private BoxCollider2D           m_boxCollider;
+    //private DamageTargetStats       m_damageTargetStats;
+    private Sensor_HeroKnight       m_groundSensorR1;
+    private Sensor_HeroKnight       m_groundSensorL1;
+    private Sensor_HeroKnight       m_wallSensorR1;
+    private Sensor_HeroKnight       m_wallSensorR2;
+    private Sensor_HeroKnight       m_wallSensorL1;
+    private Sensor_HeroKnight       m_wallSensorL2;
+    private float                   attack1SensorDistance;
+    private float                   attack2SensorDistance;
+    private float                   attack3SensorDistance;
 
     //Initialized variables
-    private bool                doubleJump = true;
-    private bool                m_isWallSliding = false;
-    private bool                m_grounded = false;
-    private bool                m_rolling = false;
-    private int                 m_facingDirection = 1;
-    //private int                 m_currentAttack = 0;
-    //private float               m_timeSinceAttack = 0.0f;
-    private float               m_delayToIdle = 0.0f;
-    private float               m_rollDuration = 8.0f / 14.0f;
-    private float               m_rollCurrentTime;
-    private readonly string     horizontalMovement = "Horizontal2";
-    private readonly string     verticalMovement= "Vertical2";
-    private readonly string     jump = "Jump2";
-    private PlayerStats         stats;
-    private float               vidaActual;
+    private bool                    doubleJump = true;
+    private bool                    m_isWallSliding = false;
+    private bool                    m_grounded = false;
+    private bool                    m_rolling = false;
+    private int                     m_facingDirection = 1;
+    //private int                     m_currentAttack = 0;
+    //private float                   m_timeSinceAttack = 0.0f;
+    private float                   m_delayToIdle = 0.0f;
+    private float                   m_rollDuration = 8.0f / 14.0f;
+    private float                   m_rollCurrentTime;
+    private readonly string         horizontalMovement = "Horizontal2";
+    private readonly string         verticalMovement= "Vertical2";
+    private readonly string         jump = "Jump2";
+    private PlayerStats             stats;
+    private float                   vidaActual;
+    private SecondPlayerAnimator    animations;
 
 
 
@@ -71,25 +72,25 @@ public class SecondPlayerController : MonoBehaviour {
         m_wallSensorR2 = transform.Find("WallSensor_R2").GetComponent<Sensor_HeroKnight>();
         m_wallSensorL1 = transform.Find("WallSensor_L1").GetComponent<Sensor_HeroKnight>();
         m_wallSensorL2 = transform.Find("WallSensor_L2").GetComponent<Sensor_HeroKnight>();
+        
         stats = transform.GetComponent<PlayerStats>();
         
         vidaActual = stats.maxHealth;
         barraDeVida.fillAmount = stats.maxHealth;
 
-
-
         attack1SensorDistance = Math.Abs(Math.Abs(transform.position.x) - Math.Abs(attackSensor1.position.x));
         attack2SensorDistance = Math.Abs(Math.Abs(transform.position.x) - Math.Abs(attackSensor3.position.x));
         attack3SensorDistance = Math.Abs(Math.Abs(transform.position.x) - Math.Abs(attackSensor3.position.x));
 
-
+        animations = new SecondPlayerAnimator(m_animator);
     }
 
     // Update is called once per frame
     void Update ()
     {
-        // Increase timer that controls horizontalAttack combo
-        //m_timeSinceAttack += Time.deltaTime;
+
+        ManageHealth();
+        
 
         // Increase timer that checks roll duration
         if (m_rolling)
@@ -98,15 +99,6 @@ public class SecondPlayerController : MonoBehaviour {
         // Disable rolling if timer extends duration
         if (m_rollCurrentTime > m_rollDuration)
             m_rolling = false;
-
-        vidaActual = stats.Health;
-        StartCoroutine(PlayerStateManagement.WaitAndExecute(0.2f, () => barraDeVida = UpdateHealth(barraDeVida, vidaActual, stats.maxHealth)));
-        if (transform.GetComponent<PlayerStats>().Health <= 0)
-        {
-            Destroy(gameObject);
-            //SceneManager.LoadScene("FirstScene");
-        }
-
 
         validateGrounded(m_grounded, m_groundSensorR1.State(), m_groundSensorL1.State());
 
@@ -126,14 +118,21 @@ public class SecondPlayerController : MonoBehaviour {
         m_isWallSliding = (m_wallSensorR1.State() && m_wallSensorR2.State()) || (m_wallSensorL1.State() && m_wallSensorL2.State());
         m_animator.SetBool(SecondPlayerAnimations.wallSlide, m_isWallSliding);
 
-        //Death
-        Death();
-
         //Player actions like jump, horizontalAttack, block, etc.
         PlayerActions(inputX);
     }
 
-    Image UpdateHealth(Image healthBar, float currentHealth, float maxHealth)
+    private void ManageHealth()
+    {
+        vidaActual = stats.Health;
+        StartCoroutine(Routines.WaitAndExecute(0.2f, () => barraDeVida = UpdateHealth(barraDeVida, vidaActual, stats.maxHealth)));
+        if (transform.GetComponent<PlayerStats>().Health <= 0)
+        {
+            animations.Die(!m_noBlood);
+        }
+    }
+
+    private Image UpdateHealth(Image healthBar, float currentHealth, float maxHealth)
     {
         healthBar.fillAmount = currentHealth / maxHealth;
         return healthBar;
@@ -141,75 +140,78 @@ public class SecondPlayerController : MonoBehaviour {
 
     private void PlayerActions(float inputX)
     {
-        //Attack
-        //if (Input.GetButtonDown(horizontalAttack) && m_timeSinceAttack > 0.25f /*&& !m_rolling*/)
-        //{
-        //    m_currentAttack++;
-        //
-        //    // Loop back to one after third horizontalAttack
-        //    if (m_currentAttack > 3)
-        //        m_currentAttack = 1;
-        //
-        //    // Reset Attack combo if time since last horizontalAttack is too large
-        //    if (m_timeSinceAttack > 1.0f)
-        //        m_currentAttack = 1;
-        //
-        //    // Call one of three horizontalAttack animations "Attack1", "Attack2", "Attack3"
-        //    m_animator.SetTrigger(SecondPlayerAnimations.attack + m_currentAttack);
-        //
-        //    m_damageTargetStats.Attack();
-        //
-        //    // Reset timer
-        //    m_timeSinceAttack = 0.0f;
-        //}
+        bool isAttacking = Input.GetKeyDown(KeyCode.N) || Input.GetKeyDown(KeyCode.M) || Input.GetKeyDown(KeyCode.L);
+        bool isBlocking = Input.GetKeyDown(KeyCode.J);
+        bool isStoppingBlock = Input.GetKeyUp(KeyCode.J) || isAttacking;
 
-        // Block
-        if (Input.GetKeyDown(KeyCode.J) && !Input.GetKeyDown(KeyCode.N) && !m_rolling)
+        HandleBlocking(isBlocking, isStoppingBlock);
+        HandleRolling();
+        HandleJumping();
+        HandleMovement(inputX);
+
+        if(m_grounded) doubleJump = true;
+    }
+
+    private void HandleBlocking(bool isBlocking, bool isStoppingBlock)
+    {
+        if (isBlocking && !m_rolling)
         {
             m_animator.SetTrigger(SecondPlayerAnimations.block);
             m_animator.SetBool(SecondPlayerAnimations.idleBlock, true);
         }
-
-        else if (Input.GetKeyDown(KeyCode.J) && !Input.GetKeyDown(KeyCode.N))
+        else if (isStoppingBlock)
+        {
             m_animator.SetBool(SecondPlayerAnimations.idleBlock, false);
+        }
+    }
 
-        // Roll
-        else if (Input.GetKeyDown("left shift") && !m_rolling && !m_isWallSliding)
+    private void HandleRolling()
+    {
+        if (Input.GetKeyDown(KeyCode.DownArrow) && !m_rolling && !m_isWallSliding)
         {
             m_rolling = true;
             m_animator.SetTrigger(SecondPlayerAnimations.roll);
             m_body2d.velocity = new Vector2(m_facingDirection * m_rollForce, m_body2d.velocity.y);
         }
+    }
 
-
-        //Jump
-        else if (Input.GetButtonDown(jump) && m_grounded && !m_rolling)
+    private void HandleJumping()
+    {
+        if (Input.GetButtonDown(jump) && m_grounded && !m_rolling)
         {
-            m_animator.SetTrigger(SecondPlayerAnimations.jump);
+            TriggerJump(m_jumpForce);
             m_grounded = false;
             m_animator.SetBool(SecondPlayerAnimations.grounded, m_grounded);
-            m_body2d.velocity = new Vector2(m_body2d.velocity.x, m_jumpForce);
-            m_groundSensorR1.Disable(0.2f);
-            m_groundSensorL1.Disable(0.2f);
+            DisableGroundSensors(0.2f);
         }
-        else if (Input.GetButtonUp(jump) && !m_grounded && doubleJump && !m_rolling)
+        else if (Input.GetButtonDown(jump) && !m_grounded && doubleJump && !m_rolling)
         {
-            m_animator.SetTrigger(SecondPlayerAnimations.jump);
+            TriggerJump(m_jumpForce * 0.5f);
             doubleJump = false;
-            m_body2d.velocity = new Vector2(m_body2d.velocity.x, m_jumpForce * 0.5f);
-            m_groundSensorR1.Disable(0.2f);
-            m_groundSensorL1.Disable(0.2f);
+            DisableGroundSensors(0.2f);
         }
+    }
 
-        //Run
-        else if (Mathf.Abs(inputX) > Mathf.Epsilon)
+    private void TriggerJump(float jumpForce)
+    {
+        m_animator.SetTrigger(SecondPlayerAnimations.jump);
+        m_body2d.velocity = new Vector2(m_body2d.velocity.x, jumpForce);
+    }
+
+    private void DisableGroundSensors(float duration)
+    {
+        m_groundSensorR1.Disable(duration);
+        m_groundSensorL1.Disable(duration);
+    }
+
+    private void HandleMovement(float inputX)
+    {
+        if (Mathf.Abs(inputX) > Mathf.Epsilon)
         {
             // Reset timer
             m_delayToIdle = 0.05f;
             m_animator.SetInteger(SecondPlayerAnimations.animState, 1);
         }
-
-        //Idle
         else
         {
             // Prevents flickering transitions to idle
@@ -219,16 +221,7 @@ public class SecondPlayerController : MonoBehaviour {
         }
     }
 
-    private void Death()
-    {
-        //m_animator.SetBool(HeroKnightAnimations.noBlood, m_noBlood);
-        //m_animator.SetTrigger(HeroKnightAnimations.death);
-    }
 
-    public void TakeDamage()
-    {
-        m_animator.SetTrigger(SecondPlayerAnimations.hurt);
-    }
 
     private void swapSpriteDirection(float inputX)
     {
@@ -292,9 +285,4 @@ public class SecondPlayerController : MonoBehaviour {
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(attackSensor1.position, boxAtackColliderDimensions);
-    }
 }

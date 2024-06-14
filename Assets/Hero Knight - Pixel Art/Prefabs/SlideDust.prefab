@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5307321229598810032}
   - component: {fileID: 4251641729282105201}
   - component: {fileID: 1794681801207184613}
-  - component: {fileID: 5605952217297194616}
+  - component: {fileID: 5231707168925776000}
   m_Layer: 0
   m_Name: SlideDust
   m_TagString: Untagged
@@ -107,7 +107,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5605952217297194616
+--- !u!114 &5231707168925776000
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

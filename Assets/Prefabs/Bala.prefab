@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 3732407948202652750}
   - component: {fileID: 2864394073317731024}
   - component: {fileID: 1631139962407021433}
-  - component: {fileID: 5136078105522852407}
-  - component: {fileID: 9080601704067403825}
+  - component: {fileID: 2067391025660088517}
+  - component: {fileID: 6025312602708228099}
   m_Layer: 0
   m_Name: Bala
   m_TagString: Untagged
@@ -122,21 +122,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.03
---- !u!114 &5136078105522852407
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2625248158389861591}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2e0f729a1076274ebaddb0c5ca9d4f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  velocidad: 10
-  "da\xF1o": 6
---- !u!114 &9080601704067403825
+--- !u!114 &2067391025660088517
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -148,4 +134,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff38c199c281422489bdcf22547f2bb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tiempoDeVida: 3
+  tiempoDeVida: 1.5
+--- !u!114 &6025312602708228099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2625248158389861591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2e0f729a1076274ebaddb0c5ca9d4f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velocidad: 15
+  "da\xF1o": 20

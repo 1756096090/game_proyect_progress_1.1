@@ -25,16 +25,8 @@ public class DeathLimits : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("fallToDeath"))
         {
-            Destroy(gameObject);
-            Esperar();
-            SceneManager.LoadScene("StartPage");
-
+            gameObject.GetComponent<PlayerStats>().Health = 0;
         }
-    }
-
-    IEnumerator Esperar()
-    {
-        yield return new WaitForSeconds(30);
     }
 
     private void HitLimits()
@@ -46,7 +38,7 @@ public class DeathLimits : MonoBehaviour
         {
             if (c.CompareTag("fallToDeath") )
             {
-                Destroy(gameObject);
+                gameObject.GetComponent<PlayerStats>().Health = 0;
             }
         }
         

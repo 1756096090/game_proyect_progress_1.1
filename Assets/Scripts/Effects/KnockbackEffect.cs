@@ -29,7 +29,7 @@ namespace Assets.Scripts.Effects
             Vector2 knockbackForce;
             Vector2 combinedForce;
 
-            hitForce = hitDirection * hitDirectionForce;
+            hitForce = hitDirection * hitDirectionForce * inputForce;
             constantForce = constantForceDirection * constForce;
 
             float elapsedTime = 0;

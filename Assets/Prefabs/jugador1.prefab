@@ -71,15 +71,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2342049325543295360}
-  - component: {fileID: 7849864593727775009}
-  - component: {fileID: 3827755075792875097}
-  - component: {fileID: 2869362887871855709}
-  - component: {fileID: 569601156847304619}
   - component: {fileID: 2337744137871746397}
   - component: {fileID: 8410011765642556859}
   - component: {fileID: 3246583754477175880}
   - component: {fileID: 9021731998899950660}
-  - component: {fileID: 9199090578484353934}
   m_Layer: 0
   m_Name: jugador1
   m_TagString: Untagged
@@ -107,83 +102,6 @@ Transform:
   - {fileID: 3515249067013381888}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7849864593727775009
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2426837710623245319}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d712db8e6eb968640b66e3723ff18a69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  velocidadDeMovimiento: 10
-  suavizadoMovimiento: 0.3
-  fuerzaDeSalto: 3
-  queEsSuelo:
-    serializedVersion: 2
-    m_Bits: 8
-  controladorSuelo: {fileID: 3904037862364933313}
-  dimencionesCaja: {x: 0.3, y: 0.3, z: 0.3}
-  enSuelo: 0
-  velocidadEscalar: 10
-  controladorPared: {fileID: 287310491521238532}
-  dimensionesCajaPared: {x: 0.3, y: 0.3, z: 0}
-  velocidadDeslisamiento: 3
-  barraDeVida: {fileID: 0}
---- !u!114 &3827755075792875097
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2426837710623245319}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcd31eeb3e1d50345889b1ef3cc3933d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controladorGolpe: {fileID: 2888970946310254884}
-  radioGolpe: 0.5
-  damageConstant: 17
-  attackCooldown: 0.5
-  attackKey: 3
---- !u!114 &2869362887871855709
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2426837710623245319}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcd31eeb3e1d50345889b1ef3cc3933d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controladorGolpe: {fileID: 8724904722801606281}
-  radioGolpe: 0.3
-  damageConstant: 15
-  attackCooldown: 0.35
-  attackKey: 4
---- !u!114 &569601156847304619
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2426837710623245319}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcd31eeb3e1d50345889b1ef3cc3933d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controladorGolpe: {fileID: 3515249067013381888}
-  radioGolpe: 0.3
-  damageConstant: 15
-  attackCooldown: 0.7
-  attackKey: 5
 --- !u!212 &2337744137871746397
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -319,21 +237,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &9199090578484353934
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2426837710623245319}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e58cdb8bf02ae147ba9e8e97008bdee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 250
-  attack: 15
-  defense: 12
 --- !u!1 &2642133415739513627
 GameObject:
   m_ObjectHideFlags: 0
