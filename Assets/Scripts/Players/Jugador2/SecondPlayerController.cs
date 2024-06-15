@@ -49,8 +49,11 @@ public class SecondPlayerController : MonoBehaviour {
     private readonly string         verticalMovement= "Vertical2";
     private readonly string         jump = "Jump2";
     private PlayerStats             stats;
-    private float                   vidaActual;
+    public float                   vidaActual;
     private SecondPlayerAnimator    animations;
+
+    [Header("Aumento de Vida")]
+    public float aumentoMaximo = 0.18f;
 
 
 
@@ -60,6 +63,8 @@ public class SecondPlayerController : MonoBehaviour {
         m_animator = GetComponent<Animator>();
         m_body2d = GetComponent<Rigidbody2D>(); 
     }
+
+    
 
     // Use this for initialization
     void Start ()
@@ -84,6 +89,13 @@ public class SecondPlayerController : MonoBehaviour {
 
         animations = new SecondPlayerAnimator(m_animator);
     }
+
+
+    public float AumentarVidaActual(float aumentarVida){
+        return vidaActual += aumentarVida;
+    }
+
+    
 
     // Update is called once per frame
     void Update ()
@@ -223,27 +235,32 @@ public class SecondPlayerController : MonoBehaviour {
 
 
 
-    private void swapSpriteDirection(float inputX)
+     private void swapSpriteDirection(float inputX)
+{
+    if (inputX > 0)
     {
-        if (inputX > 0)
+        if (m_facingDirection != 1)
         {
-            GetComponent<SpriteRenderer>().flipX = false;
             m_facingDirection = 1;
+            transform.eulerAngles = new Vector3(0, 0, 0); // No hay rotación en Y (eje vertical)
             attackSensor1.position = new Vector3(transform.position.x + attack1SensorDistance, attackSensor1.position.y, attackSensor1.position.z);
             attackSensor2.position = new Vector3(transform.position.x + attack2SensorDistance, attackSensor2.position.y, attackSensor2.position.z);
             attackSensor3.position = new Vector3(transform.position.x + attack3SensorDistance, attackSensor3.position.y, attackSensor3.position.z);
-
         }
-
-        else if (inputX < 0)
+    }
+    else if (inputX < 0)
+    {
+        if (m_facingDirection != -1)
         {
-            GetComponent<SpriteRenderer>().flipX = true;
             m_facingDirection = -1;
+            transform.eulerAngles = new Vector3(0, 180, 0); // Rotación de 180 grados en Y (eje vertical) para invertir la dirección
             attackSensor1.position = new Vector3(transform.position.x - attack1SensorDistance, attackSensor1.position.y, attackSensor1.position.z);
             attackSensor2.position = new Vector3(transform.position.x - attack2SensorDistance, attackSensor2.position.y, attackSensor2.position.z);
             attackSensor3.position = new Vector3(transform.position.x - attack3SensorDistance, attackSensor3.position.y, attackSensor3.position.z);
         }
     }
+}
+
 
 
     // Animation Events
@@ -284,5 +301,52 @@ public class SecondPlayerController : MonoBehaviour {
             m_animator.SetBool(SecondPlayerAnimations.grounded, isGrounded);
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("pill"))
+        {
+            AumentarVida();
+            Destroy(other.gameObject); // Destruir la pastilla
+        }
+        if (other.CompareTag("att"))
+        {
+            AumentarAtaque();
+            Destroy(other.gameObject); // Destruir la pastilla
+        }
+        if (other.CompareTag("def"))
+        {
+            AumentarEscudo();
+            Destroy(other.gameObject); // Destruir la pastilla
+        }
+    }
+
+    public void AumentarVida()
+    {
+        if (stats.Health >= stats.maxHealth)
+        {
+            float aumentoVida = stats.maxHealth * aumentoMaximo;
+            stats.maxHealth += aumentoVida;
+            stats.Health += aumentoVida;
+        }
+        else
+        {
+            stats.maxHealth += stats.maxHealth * aumentoMaximo;
+            stats.Health += stats.maxHealth * aumentoMaximo;
+        }
+
+        if (stats.Health > stats.maxHealth)
+        {
+            stats.Health = stats.maxHealth;
+        }
+    }
+
+    public void AumentarEscudo(){
+        stats.Defense += Mathf.RoundToInt(stats.Defense * aumentoMaximo);
+    }
+
+    public void AumentarAtaque(){
+        stats.Attack += stats.Attack * aumentoMaximo;
+    }           
 
 }

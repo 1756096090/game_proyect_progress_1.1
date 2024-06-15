@@ -8,7 +8,7 @@ namespace Assets.Scripts.Stats
     {
         
         [BoxGroup("Stats")]
-        [LabelText("Vida Máxima")]
+        [LabelText("Vida Mï¿½xima")]
         [SerializeField] public float maxHealth;
         [BoxGroup("Stats")]
         [LabelText("Ataque Base")]
@@ -53,6 +53,11 @@ namespace Assets.Scripts.Stats
             Attack = attack;
             Defense = defense;
             
+        }
+
+        public void AumentarVidaMaxima(float cantidad)
+        {
+            maxHealth += cantidad;
         }
     }
 }

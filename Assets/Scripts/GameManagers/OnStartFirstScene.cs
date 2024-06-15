@@ -10,12 +10,12 @@ public class OnStartFirstScene : MonoBehaviour
 
     private void Start()
     {
-        InitializeScene();
+        // InitializeScene();
     }
 
     private void InitializeScene()
     {
-        StartCoroutine(StartCountdown());
+        // StartCoroutine(StartCountdown());
     }
 
     private IEnumerator StartCountdown()
@@ -25,17 +25,17 @@ public class OnStartFirstScene : MonoBehaviour
 
         countdownParent.SetActive(true);
 
-        int countdown = 3;
+        int countdown = 1;
         while (countdown > 0)
         {
             countdownText.text = countdown.ToString();
             // Utilizar WaitForSecondsRealtime para esperar en tiempo real
-            yield return new WaitForSecondsRealtime(1);
+            yield return new WaitForSecondsRealtime(0.1f);
             countdown--;
         }
 
         countdownText.text = "Fight!";
-        yield return new WaitForSecondsRealtime(1);
+        yield return new WaitForSecondsRealtime(0.1f);
 
         countdownParent.SetActive(false);
 

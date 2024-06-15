@@ -11,8 +11,10 @@ GameObject:
   - component: {fileID: 3732407948202652750}
   - component: {fileID: 2864394073317731024}
   - component: {fileID: 1631139962407021433}
+  - component: {fileID: 4897105913874020392}
   - component: {fileID: 2067391025660088517}
-  - component: {fileID: 6025312602708228099}
+  - component: {fileID: -1533567132833473699}
+  - component: {fileID: -1927957157480486475}
   m_Layer: 0
   m_Name: Bala
   m_TagString: Untagged
@@ -30,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.008726558, w: 0.999962}
   m_LocalPosition: {x: 10, y: 10, z: 100}
-  m_LocalScale: {x: 4, y: 3, z: 2}
+  m_LocalScale: {x: 2.4891949, y: 2.4891949, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -122,6 +124,20 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.03
+--- !u!114 &4897105913874020392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2625248158389861591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2fe4ae2a03faf845a69f8f614b11ab0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  bala2: {fileID: 0}
 --- !u!114 &2067391025660088517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,7 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tiempoDeVida: 1.5
---- !u!114 &6025312602708228099
+--- !u!114 &-1533567132833473699
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,8 +160,35 @@ MonoBehaviour:
   m_GameObject: {fileID: 2625248158389861591}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2e0f729a1076274ebaddb0c5ca9d4f8, type: 3}
+  m_Script: {fileID: 11500000, guid: d2fe4ae2a03faf845a69f8f614b11ab0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocidad: 15
-  "da\xF1o": 20
+  damage: 10
+  bala2: {fileID: 2625248158389861591}
+--- !u!50 &-1927957157480486475
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2625248158389861591}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
